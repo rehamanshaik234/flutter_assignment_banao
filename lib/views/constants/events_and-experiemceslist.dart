@@ -1,12 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_banao/views/date_converter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-class EventsList extends StatelessWidget {
+class EventsList extends StatefulWidget {
   const EventsList({Key? key}) : super(key: key);
 
   @override
+  State<EventsList> createState() => _EventsListState();
+}
+
+class _EventsListState extends State<EventsList> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
-    return  ListView.builder(itemBuilder: (context,index){
+    return lessonData.isEmpty?Center(child: CircularProgressIndicator(
+      color: Colors.blue,strokeWidth: 3,
+    )):
+    ListView.builder(itemBuilder: (context,index){
       return Padding(
         padding:  EdgeInsets.only(right: 16.w),
         child: ClipRRect(
@@ -26,18 +40,17 @@ class EventsList extends StatelessWidget {
                     SizedBox(height: 16.h,),
                     Padding(
                       padding: EdgeInsets.only(left: 12.w,bottom: 8.h),
-                      child: Text('BABY CARE',style:  GoogleFonts.inter(color: Colors.blue,fontSize:12.sp,fontWeight: FontWeight.w700),),
+                      child: Text('${programData[index]['category']}',style:  GoogleFonts.inter(color: Colors.blue,fontSize:12.sp,fontWeight: FontWeight.w700),),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 12.w,bottom: 15.h),
-                      child: Text('UnderStanding of human\n'
-                          'behaviour',style: GoogleFonts.inter(color: Colors.black,fontSize:15.sp,fontWeight: FontWeight.w700)),
+                      child: Text('${programData[index]['name']}',style: GoogleFonts.inter(color: Colors.black,fontSize:15.sp,fontWeight: FontWeight.w700)),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 12.w,bottom: 0.h),
                       child: Row(
                         children: [
-                          Text('13 Feb, Sunday',style: GoogleFonts.inter(color: Colors.grey,fontSize:12.sp,fontWeight: FontWeight.w500),),
+                          Text('${datePicker[index]}',style: GoogleFonts.inter(color: Colors.grey,fontSize:12.sp,fontWeight: FontWeight.w500),),
                           Spacer(),
                           Padding(
                             padding:  EdgeInsets.only(right: 12.w),
@@ -67,7 +80,7 @@ class EventsList extends StatelessWidget {
         ),
       );
     },
-      itemCount: 4,
+      itemCount: programData.length,
       shrinkWrap: true,
       scrollDirection:Axis.horizontal,
     );

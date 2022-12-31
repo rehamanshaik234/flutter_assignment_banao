@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_banao/views/screens/NaviationPage.dart';
+import 'package:flutter_banao/views/screens/splash_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'NaviationPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        home: const HomePage(),
+        home: const SplashScreen(),
       );
       },
       designSize: Size(360,690),

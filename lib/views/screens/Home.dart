@@ -1,11 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_banao/constants/programslist.dart';
-import 'package:flutter_banao/constants/suggestions.dart';
+import 'package:flutter_banao/views/date_converter.dart';
+import 'package:flutter_banao/views/screens/ModelProgram.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../app_urls/app_urls.dart';
+import '../constants/events_and-experiemceslist.dart';
+import '../constants/lessons list.dart';
+import '../constants/programslist.dart';
+import '../constants/suggestions.dart';
+import 'package:http/http.dart' as http;
 
-import 'constants/events_and-experiemceslist.dart';
-import 'constants/lessons list.dart';
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 
@@ -14,9 +20,39 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+    void getPrograms() async {
+    final response= await http.get(Uri.parse(AppUrls.programs));
+    final body=json.decode(response.body);
+    setState(() {
+      programData=body["items"];
+    });
+    print(programData);
+    dateChanger();
+  }
+    void getLessons() async {
+    final response= await http.get(Uri.parse(AppUrls.lessons));
+    final body=json.decode(response.body);
+    setState(() {
+      lessonData=body["items"];
+    });
+
+    print(lessonData);
+  }
+  @override
+  void initState() {
+      getPrograms();
+      getLessons();
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return //lessonData.isEmpty? Center(
+      //child: CircularProgressIndicator(
+        //color: Colors.blue,strokeWidth: 3,
+      //),
+    //):
+    Padding(
       padding:  EdgeInsets.all(0.sp,),
       child: SingleChildScrollView(
         child: Column(
